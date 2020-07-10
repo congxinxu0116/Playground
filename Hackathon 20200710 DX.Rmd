@@ -1,0 +1,158 @@
+---
+title: "BootCamp Hackathon: Pandemic"
+author: "Congxin (David) Xu"
+date: "7/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+## Bootcamp Hackathon
+### Summary
+- Create a line chart of the total confirmed COVID-19 cases per million people
+- Create a map of total confirmed COVID-19 cases per million people 
+
+### Line Chart
+```{r, include=FALSE}
+# Load the library
+library(tidyverse)
+
+# Individual Country to graph in line chart: 
+country <- c("United States", "United Kingdom", "South Korea", "China")
+
+# Read in the data
+data <- read_csv("owid-covid-data.csv")
+
+# Preview the data
+head(data)
+
+```
+```{r, include=FALSE}
+# Take a look at the summary
+summary(data)
+```
+
+```{r, include=FALSE}
+# Data Cleaning
+# Convert all NA's in the total cases per million column to 0
+data$total_cases_per_million[is.na(data$total_cases_per_million)] <- 0
+
+# Since there is no location == world, we are going to create one 
+world <- data %>% 
+  select(date, total_cases_per_million) %>% 
+  group_by(date) %>% 
+  summarise(total_cases_per_million = sum(total_cases_per_million)) %>% 
+  mutate(location = 'World') %>% 
+  select(location, date, total_cases_per_million)
+
+
+# Collect data to graph
+data_lc <- data %>% 
+  
+  # Select the columns we need
+  select(location, date, total_cases_per_million) %>% 
+  
+  # Filter on the countries we need 
+  filter(location %in% country) %>% 
+  
+  # Add world level data
+  bind_rows(world) %>% 
+ 
+   # Perform log transformation
+  mutate(total_cases_per_million_log = log10(total_cases_per_million)) %>% 
+  
+  # Select the columns we need 
+  select(location, date, total_cases_per_million_log)
+  
+
+# Check to see if we have all the locations:
+if (length(unique(data_lc$location)) == length(country) + 1) {
+  print("All the countries including world are here.")
+} else {
+  print("At least one country is missing")
+}
+# rm(world)
+# gc()
+```
+
+```{r Line Chart}
+ggplot(data = data_lc) + 
+  geom_line(aes(x = date, y = total_cases_per_million_log, colour = location)) + 
+  ggtitle(label = "Total confirmed COVID-19 cases per million people",
+              subtitle = "The number of confirmed cases is lower than the number of total cases. \nThe main reason for this is limited testing.") +
+  xlab("") +
+  ylab("") + 
+  theme_bw() + 
+  theme(legend.title = element_blank(), 
+        legend.position="right", 
+        legend.direction = 'vertical')
+
+```
+
+### World Map Chart
+```{r, include=FALSE}
+# Resources: https://www.datanovia.com/en/blog/how-to-create-a-map-using-ggplot2/
+
+# Select a day
+singleday <- Sys.Date()
+
+# Load Library
+library(maps)
+world_map <- map_data("world")
+
+
+# Check country names 
+world_map_country <- world_map %>% 
+  mutate(map = 1) %>% 
+  distinct(region, map)
+
+data_country <- data %>% 
+  mutate(country = 1) %>% 
+  distinct(location, country)
+
+check <- full_join(world_map_country, data_country, by = c('region' = 'location')) %>% 
+  arrange(region)
+
+data_singleday <- data %>% 
+  filter(date == singleday) %>% 
+  select(location, total_cases_per_million) 
+
+# Label Correction
+data_singleday$location[which(data_singleday$location == 'Antigua and Barbuda')] <- 'Antigua'
+data_singleday$location[which(data_singleday$location == 'Bonaire Sint Eustatius and Saba')] <- 'Bonaire'
+data_singleday$location[which(data_singleday$location == 'Democratic Republic of the Congo')] <- 'Democratic Republic of Congo'
+data_singleday$location[which(data_singleday$location == 'Faeroe Islands')] <- 'Faroe Islands'
+data_singleday$location[which(data_singleday$location == 'Sint Maarten (Dutch part)')] <- 'Sint Maarten'
+data_singleday$location[which(data_singleday$location == 'Timor	')] <- 'Timor-Leste'
+data_singleday$location[which(data_singleday$location == 'United Kingdom')] <- 'UK'
+data_singleday$location[which(data_singleday$location == 'United States')] <- 'USA'
+data_singleday$location[which(data_singleday$location == 'United States Virgin Islands')] <- 'Virgin Islands'
+
+# Join with World Map Data
+data_singleday <- left_join(world_map, data_singleday, by = c('region' = 'location'))
+
+# Remove unnecessary data frames
+rm(world_map_country, data_country, check, world_map)
+gc()
+
+```
+
+```{r}
+# Map 
+ggplot(data_singleday, aes(x = long, y = lat, group = group)) +
+  geom_polygon(aes(fill = total_cases_per_million), color = 'white') + 
+  ggtitle(label = "Total confirmed COVID-19 cases per million people", 
+          subtitle = "The number of confirmed cases is lower than the number of total cases. \nThe main reason for this is limited testing.") +
+  xlab("") + 
+  ylab("") +
+  theme_void() + 
+  # scale_fill_continuous(guide = guide_legend()) +
+  theme(legend.title = element_blank(), 
+        legend.position="bottom", 
+        legend.direction = 'horizontal', 
+        legend.key.width=unit(3,"cm")) 
+```
+
+
