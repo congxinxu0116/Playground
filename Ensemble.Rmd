@@ -1,0 +1,726 @@
+**SYS 6018 | Fall 2020 | University of Virginia **    
+**Final Project**
+
+Group Members: Hyunglok Kim (hk5kp), Yibo Wang (yw9et), Ruoyu Zhang (rz3jr), and Diyu Zheng (dz2fc)
+
+*******************************************
+
+<!--- Below are global settings for knitr. You can override any of them by adding the changes to individual chunks --->
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(error=TRUE,        # Keep compiling upon error
+                      collapse=FALSE,    # collapse by default
+                      echo=TRUE,         # echo code by default
+                      comment = "#>",    # change comment character
+                      fig.width = 5,     # set figure width
+                      fig.align = "center",# set figure position
+                      out.width = "49%", # set width of displayed images
+                      warning=TRUE,      # show R warnings
+                      message=TRUE)      # show R messages
+options(dplyr.summarise.inform = FALSE)  # ignore message about group structure
+```
+
+<!--- Solution Region --->
+```{css solution-region, echo=FALSE}
+.solution {
+  background-color: #232D4B10;
+  border-style: solid;
+  border-color: #232D4B;
+  padding: .5em;
+  margin: 20px
+}
+```
+
+
+<!--- Load Required R packages here --->
+```{r packages, include=FALSE}
+library(tidyverse)
+```
+
+
+# Ensemble of Machine Learning Models
+### Case: Downscaling of Soil Moisture in Mid-Atlantic from 10km to 1km
+
+
+## 1. Introduction
+Ensemble modeling is one of the most commonly used predictive modeling approaches to obtain great predictive performances. The idea behind ensemble is simple yet powerful: it takes multiple machine learning algorithms (also called base learners) and combine their strengths together to achieve higher model accuracy and reduce variance. It may surprise you that the weak learners in the ensemble model also often make significant contributions, and the performances maybe decrease if they are removed from the model! In this tutorial, we are going to elaborate this concept step by step and also demonstrate how you can easily implement ensemble models by use the h2o package in R. 
+
+We will use the awesome package [**`h2o`**](https://docs.h2o.ai/), which is a powerful machine learning package implemented at both R and Python and include most popular machine learning algorithms (GLM, random forest, gradient boost, XGBoost, etc.). In this tutorial, we will use `h2o` to build three machine learning models, RIDGE regression, Random Forest, and XGBosst as our baselearners, and GLM as our metalearner to ensemble baselearners. 
+ 
+The outline of this tutorial is as following:
+1. Process the data    
+2. Build baselearners    
+    - RIDGE    
+    - Random Forest    
+    - XGBoost    
+3. Ensemble     
+
+Though h2o has the function to ensemble base learners conviniently, we will go through the details of ensemble from [Van der Lann et al. (2007)](https://doi.org/10.2202/1544-6115.1309) step-by-step so that you can understand how the ensemble works and how the ensemble model makes predictions. 
+
+### Soil Moisture
+Surface soil moisture is an important environmental indicator for hydrologic hazards. Prolonged low soil moisture is an indicator for droughts, and wet soil moisture can be an contributor to severity of floods if storms are projected to occur. Nowadays, with development of technologies in sensors, we can get daily observation of soil moisture to 5-cm depth from satellites, which enables us to have global coverage of soil moisture observations.In this tutorial, we will use machine learning models and stacking/ensemble method to explore prediction methods.
+
+### Goal
+Our main goal is to **downscale precision of soil moisture from $100km^2$ to $1km^2$**. Our training data has the precision of $100km^2$, including 17 predictors, including longitude, lattitude, evapotranspiration etc., and 1 reponse variable, the soil moisture.By training models on data of $100km^2$ which we will later use to predict soil moisture with better precision. The improvement of the precision is under a significant assumption that the relationship between the predictors and the response variables are scalable. In another word, regardless of the size of actual physical space, the soil moisture could be derived from the predictors with the same model. We choose to use three modeling method to build three independent modeling and then integrate them through ensemble. The three methods are ridge penalty, random forest and boosting. 
+
+Reference 
+1. https://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/stacked-ensembles.html
+
+2. Van der Laan, M. J., Polley, E. C., & Hubbard, A. E. (2007). Super learner. Statistical applications in genetics and molecular biology, 6(1). https://doi.org/10.2202/1544-6115.1309
+$$= \frac{0.15}{0.2} = 0.75$$    
+The confidence of the rule is **0.75**.
+
+<div class="solution">
+Load Packages:
+```{r}
+library(h2o)
+library(tidyverse)
+
+h2o.init(min_mem_size = '5g')
+```
+</div>
+
+## 2. Data Processing
+We will process our raw data and select the variables we need to build models. 
+
+```{r}
+# Load the raw data
+raw_data = read_csv('Train.csv')
+
+# raw_data = raw_data %>% select(-s_landcover, -MOD_LST, -MYD_LST)   # Drop categorical and problematic variables
+raw_data = raw_data %>% select(-s_landcover)
+
+y = raw_data %>% select(Y_Soil_Moisture)    # Training data response and drop rows with NA value
+x = raw_data %>% select(-Y_Soil_Moisture)  
+# Average the observations of several variables
+raw_data['EVI'] = rowMeans(x %>% select(MOD_EVI,MYD_EVI),na.rm = TRUE)  
+raw_data['NDVI'] = rowMeans(x %>% select(MOD_NDVI,MYD_NDVI),na.rm = TRUE)  
+raw_data['ET'] = rowMeans(x %>% select(MOD_ET,MYD_ET),na.rm = TRUE)  
+raw_data['LE'] = rowMeans(x %>% select(MOD_LE,MYD_LE),na.rm = TRUE)  
+raw_data['LST'] = rowMeans(x %>% select(MOD_LST,MYD_LST),na.rm = TRUE)     ## Include LST result in too many NA data
+
+x = raw_data %>% select(doy, latitude, longitude, Albedo_BSA_nir, Albedo_WSA_nir, # LST,
+                EVI, NDVI, ET, LE, s_elevation, s_aspect, s_slope, Y_Soil_Moisture) %>% drop_na()
+```
+
+To deploy `h2o`, the data need to be stored as the format that the package requires. You can use `as.h2o()` function to transform the data into the correct format.
+```{r}
+train_data = as.h2o(x)
+```
+
+## 3. Individual Model Building
+### (1) RIDGE Model
+
+The first model we build is a RIDGE model.     
+#### Framework of Ridge Model
+The first model we build is a Ridge model. Under the general framework,
+$$\hat \beta = \text{arg}\,\max\limits_{\beta} \space \{l(\beta) + \lambda P(\beta)\}$$
+the optimization of estimators consider both loss and penalty. This general framework aims to deal with the issue of **multicollinearity**, which leads to large variance of least square estimates despite the estimates are unbiased. To improve least square, **shrinkage methods** imposes penalty on the coefficients to force coefficients shirnk towards 0. <br>
+<br>
+The component accounts for loss in ridge regression is simialr to other methods. The loss could be either defined by MSE or SSE. when loss is defined by MSE, 
+$$l(\beta) = \frac{1}{n}\sum_{i=1}^{n}(y_i - \beta_0 - \sum_{j=1}^{p}x_{ij}\beta_j)^2 = \text{MSE}$$
+What differs Ridge from other shrinkage methods, such as lasso and elastic net, is that regression with Ridge penalty has the penalty term $P(\beta) = \sum_{j=1}^{p}|\beta_j|^2$, where none of the predictor will be eliminated, but the coefficients from correlated predictors shrink towards each other. In another word, the coeffcients for highly correlated predictors tend to have simialr value. The penalty term also ensures that the intercept of the model, $\beta_0$ will not be penalized.<br> 
+<br>
+The penalty term, $P(\beta)$, will be multipied by the tunning parameter $\lambda$, which indicates the strength of penalty. As $\lambda$ increases, more penalty is imposed on the model. When $\lambda = 0$, no penlaty is applied and estimates will simply be the same as the one given by least square. When $
+\lambda$ approaches $\infty$, all the coefficients except the intercept will be $0$.  <br>
+<br>
+
+Using h2o, the package can pick the lambda of the RIDGE model through k-fold cross validation. 
+We use the data at DOY 250 from our training data. You can change the date to any number from DOY 198 to 264. 
+
+<div class="solution">
+```{r}
+# building the RIDGE model
+doy = 250
+
+ridge_model = h2o.glm(y = 'Y_Soil_Moisture', x = 1:16, 
+                      training_frame = train_data[train_data['doy']==doy,], 
+                      family = "gaussian", 
+                      seed=444, 
+                      nfold=10, 
+                      alpha=1, 
+                      lambda_search = TRUE, 
+                      max_active_predictors = 11, 
+                      keep_cross_validation_predictions = TRUE)
+
+```
+
+Let's check the ridge model coefficients:
+```{r}
+ridge_model@model$coefficients_table
+```
+From the result, slope and Albedo WSA nir are the most two important predictors for this day.
+
+</div>
+
+Now we've build the model, and let's plot how the ridge model prediction on training data, and visualize the spatial difference from the original observations.
+
+1. We first plot the Ridge Predictions
+```{r}
+# Prediction
+pred_ridge = h2o.predict(ridge_model, train_data[train_data['doy']==doy,])
+
+# Set the size of map
+options(repr.plot.width = 12, repr.plot.height = 7)
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'= as.vector(pred_ridge)
+      ) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + 
+geom_raster() + 
+scale_fill_viridis_c(limits=c(0,0.5)) + 
+coord_quickmap() + ggtitle('Ridge Model Prediction')
+```
+
+2. Then we plot the observations, the Y response variable of our training data.
+```{r}
+# observation
+
+# Set the size of map
+options(repr.plot.width = 12, repr.plot.height = 7)
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude,  
+       'pred'= as.vector(train_data[train_data['doy']==doy,]$Y_Soil_Moisture)) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + geom_raster() + scale_fill_viridis_c(limits=c(0,0.5)) +
+coord_quickmap() + ggtitle('Observation')
+```
+
+3. Finally, we plot the difference between predictions and observations,  $\hat{y} - y$
+```{r}
+# Observation - prediction
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'=as.vector(pred_ridge) - as.vector(train_data[train_data['doy']==doy,]$Y_Soil_Moisture)) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + geom_raster() + scale_fill_viridis_c(limits=c(-0.2,0.2)) + 
+coord_quickmap() + ggtitle('Prediction Minus Observation')
+```
+
+
+#### Ridge Model Summary
+From the difference map, we find Ridge model gives a too smooth prediction of the soil moisture: overestimate the dry region soil moisture and underestimate the wet conditions. **Therefore, we don't think Ridge model does a good job here, and we will test on other machine learning algorithms.**
+
+
+
+### (2) Random Forest
+
+Random Forest is a modification of bagging trees that use boostrap and ensemble to build de-correlated trees.<br>
+<br>
+Regression tree has the algorithm of partitioning the feature space into two sub-space recursively, and only one feature will be used to determine the split. Since trees in general have greedy hierarchical structure, trees are instable. Bagging trees are a type of trees that use bagging to reduced the variance of general trees. The algorithm of Bagging Trees is growing a set of B trees, each from a boostrap sample, and then average the predition. The prediction of bagging trees are:
+$$\hat{f}(x) = \frac{1}{B} \sum_{b=1}^{B}T(x;\hat{\theta}_b)$$
+
+where $\hat{f}(x)$ is the estimated function prediction and $\hat{\theta}_b$ are all estimated parameters for fitting the tree. 
+If we are using
+$$\bar{\theta} = \frac{1}{M}\sum_{i=1}^{M}\hat{\theta}_i$$
+to make an ensemble prediction, the variance of ensemble will be 
+$$V(\bar{\theta}) = \frac{1}{M^2} \sum_{i=1}^{M}\text{V}(\hat{\theta}_i) + \frac{1}{M^2}\sum_{i<j}\sqrt{\text{V}(\hat{\theta}_i)\text{V}(\hat{\theta}_j)}\space \text{Cor}(\hat{\theta}_i,\hat{\theta}_j)$$
+This is an indication that it models used to ensemble are less correlated with each other, $\text{Cor}(\hat{\theta}_i,\hat{\theta}_j)$ is smaller, the variance of ensemble could be further decreased.<br>
+<br>
+Random Forest is built upon the idea of de-correlated tree models for ensemble by imposing restrictions on the set of features of splitting. **There are two major tunning parameters of Random Forest Model.** $m$ is the number predictors that are randomly drawn out of total p predictors for each split within each tree. In order to control the complexity of the model to prevent overestimation, another tunning parameter is the depth or the size of the trees. The variance of the model could be controlled by setting the minimum number of observations in the leaf nodes or the depth of the tree. The tunning parameters could be determined by from cross-validation or out of bag error.<br>
+<br>
+The algorithm of Random Forest starts with drawing $B$ bootstrap samples from the training data. For bootstrap sample $b$, grow a random-forest tree $T_b$ through recursively randomly select $m$ predictors at each split, pick the best varibale to split one node into to two sub nodes. Then ensemble the regression model by taking the average of the prediction results of all models. 
+The regression prediction of Random Forest are:
+$$\hat{f}_{rf}^{B}(x) = \frac{1}{B} \sum_{b=1}^{B}T_b(x)$$
+
+##### **Note:**
+Besides the tutorial of building a single random forest model here, we also illustrate how to use `h2o` package to build model via. **grid search**. The code is at the appendix of this tutorial. 
+
+Here we use the default random forest model parameters to model the soil moisture, and use 10-fold cross validation and ridge with the same random seed 444. 
+```{r}
+default_rf = h2o.randomForest(y = 'Y_Soil_Moisture', x = 1:16,
+                               training_frame = train_data[train_data['doy']==doy,], 
+                               stopping_rounds = 5, 
+                               stopping_tolerance = 0.001, 
+                               stopping_metric = "MSE", 
+                               seed = 444, 
+                               balance_classes = FALSE, 
+                               nfolds = 10,
+                               keep_cross_validation_predictions = TRUE)
+```
+
+We can conveniently check the variable importance of the random forest model by calling the model's variable importance table.
+```{r}
+default_rf@model$variable_importances
+```
+
+You can also check the cross-validation result of random forest model. Comparing to the ridge model, RF can improve the cross-validation $R^2$ from 0.47 to 0.76 using the same folds, very impressive!
+```{r}
+default_rf@model$cross_validation_metrics_summary
+h2o.performance(default_rf, newdata = train_data[train_data['doy']==doy,])
+```
+
+Let's plot the random forest prediction ($\hat{y}$).
+```{r}
+# Prediction
+pred_rf = h2o.predict(default_rf, train_data[train_data['doy']==doy,])
+
+# Set the size of map
+options(repr.plot.width = 12, repr.plot.height = 7)
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'= as.vector(pred_rf)
+      ) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + 
+geom_raster() + 
+scale_fill_viridis_c(limits=c(0,0.5)) + 
+coord_quickmap() + ggtitle('Random Forest Prediction')
+```
+
+Let's also plot the model error,  $\hat{y} - y$, with same color scale as the ridge model.
+```{r}
+# Observation - prediction
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'=as.vector(pred_rf) - as.vector(train_data[train_data['doy']==doy,]$Y_Soil_Moisture)) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + geom_raster() + scale_fill_viridis_c(limits=c(-0.2,0.2)) + 
+coord_quickmap() + ggtitle('RF Prediction Minus Observation')
+```
+
+#### Random Forest Summary
+As we found earlier that RF can significantly improve the cross validation $R^2$ and $RMSE$ than the ridge model, the lower prediction error is expected!
+
+### (3) XGBoost
+#### Framework of XGBoost
+XGBoost is an open-source software that implements Extreme Gradient Boosting. Boosting is a sequential ensemble method. The prediction given by the boosting is
+$$\hat{f}_M(x) = \sum_{k=1}^{M}\hat{a}_k\hat{g}_k(x)$$
+where $M$ is the number of base learner, $\hat{a}_k$ is the weight for the $k$th base learner, and the $\hat{g}_k(x)$ is the prediction from the $k$th base learner. Base learners are **fitted sequentially**, and the best model at stage m is dependent on all models fit prior to stage $m$. Every iteration within the boosting model to fit the base learn will reduce bias and increase the potential complexity of the model. The complexity could be reduced by controling number of iterations and applying shrinkage to reduce weight.<br>
+<br>
+Gradient Boosting is one type of boosting model that requentially re-fit to the negative gradients of the pseudo-residuals. With the goal to minimize the loss function, the algorithm of Gradient Boosting is as follow. We firstly initialize the model with $$\hat{f}_0(x) = \bar{y}$$
+For each of the M steps that we fit a new base learner, we computer the **pseudo-residuals**, 
+$$r_i = y_i - \hat{f}_{k-1}(x_i)\text{,  for }i = 1,\cdot \cdot \cdot, n$$
+Then, we fit the next base learner to pseudo-residuals and use $\{(x_i,r_i)\}_{i=1}^{n}$ to train the base learner $\hat{g}_k(x)$.
+We then update the overall model $$\hat{f}_k(x) = f_k-1(x) + v \hat{g}_k(x)$$ where $v$ is the shrinkage factor that applied to the current base model.
+Finally, the model after M iterations will be 
+$$\hat{f}_M(x) = \bar{y} + \sum_{k=1}^{M}v \hat{g}_k(x)$$
+#### XGBoost in `h2o`
+Package XGBoost follows the general framework of Gradient Boosting. It takes in three tunning parameters: the shrinkage parameter, the number of iteratons and number of folds for cross validation. We call the function `h2o.xgboost()` to create the XGBoost Model.
+
+```{r}
+xgb_model = h2o.xgboost(x = 1:16,
+                           y = 'Y_Soil_Moisture',
+                           training_frame = train_data[train_data['doy']==doy,],
+                           booster = "dart",
+                           normalize_type = "tree",
+                           seed = 444,
+                           nfolds = 10,
+                           keep_cross_validation_predictions = TRUE)
+```
+
+The XGboost model has lower cross validation $R^2$ comparing to random forest, but the model MSE is lower, which indicates our XGBoost model may overfit the data. 
+```{r}
+xgb_model@model$cross_validation_metrics_summary
+h2o.performance(xgb_model, newdata = train_data[train_data['doy']==doy,])
+```
+
+Let's plot the prediction and model error for XGBoost too.
+```{r}
+# Prediction
+pred_xgb = h2o.predict(xgb_model, train_data[train_data['doy']==doy,])
+
+# Set the size of map
+options(repr.plot.width = 12, repr.plot.height = 7)
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'= as.vector(pred_xgb)
+      ) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + 
+geom_raster() + 
+scale_fill_viridis_c(limits=c(0,0.5)) + 
+coord_quickmap() + ggtitle('XGBoost Prediction')
+```
+
+```{r}
+# Observation - prediction
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'=as.vector(pred_xgb) - as.vector(train_data[train_data['doy']==doy,]$Y_Soil_Moisture)) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + geom_raster() + scale_fill_viridis_c(limits=c(-0.2,0.2)) + 
+coord_quickmap() + ggtitle('XGBoost Prediction Minus Observation')
+```
+
+#### XGboost Summary
+Though indicated by the cross-validation result that XGBoost model may overfit the data, the prediction is equally well as the random forest model by viewing the map. 
+
+
+### (4) Stacked Ensemble Model
+Finally, we will try to use ensemble model based on the previous three models we built. `h2o` has the function `h2o.stackedEnsemble` that can let you easily ensemble as many invidivual models as possible to make the ensemble prediction. 
+
+#### We will go through the details in the next session.
+
+##### **Note:**
+To use this function, you need to make sure your models to be stacked has the same folds, which means when building the model, all your individual models need to have the same number of folds and random state. 
+
+```{r}
+stack_model = h2o.stackedEnsemble(y = 'Y_Soil_Moisture', x = 1:16, 
+                    training_frame = train_data[train_data['doy']==doy,], 
+                    base_models = list(ridge_model, default_rf, xgb_model), seed=996, metalearner_nfolds=10)
+```
+
+The ensemble model has slightly lower cross-validation RMSE comparing with the best individual model, random forest (0.02117 to 0.02294). 
+```{r}
+stack_model@model$cross_validation_metrics
+```
+
+Let's plot the ensemble prediction.
+```{r}
+stack_pred = h2o.predict(stack_model, train_data[train_data['doy']==doy,])
+
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'= as.vector(stack_pred)) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + geom_raster() + scale_fill_viridis_c(limits=c(0,0.5)) +
+coord_quickmap() + ggtitle('Stacked Ensemble Prediction')
+```
+
+```{r}
+tibble('lon' = x[x['doy']==doy,]$longitude, 
+       'lat' = x[x['doy']==doy,]$latitude, 
+       'pred'= as.vector(stack_pred - train_data[train_data['doy']==doy,]$Y_Soil_Moisture)) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + geom_raster() + scale_fill_viridis_c(limits=c(-0.1,0.1)) + 
+ggtitle("Difference between Ensemble Model and Observation") + coord_quickmap()
+```
+
+
+## 4. In Depth Understanding: Ensemble Process and Prediction
+Here we will replicate the ensemble process step-by-step. 
+
+The ensemble of individual models (baselearners) use the algorithm below, as indicated from `h2o` documentations:
+1. Train each base learner using k-fold cross-validation (a total of L base learners)
+2. Create a new N x L design matrix where the rows are cross-validation predictions for each base learner. This design matrix along with the original response variable is called the level-1 data.
+3. Train a meta-learner of choice (also called a super learner) on the level-1 data.
+
+**Note:**    
+The ensemble uses individual model's cross validation accuracy to determine the weights for each baselearner, so the folds for cross-validation for each baselearner should be identical, which guarantee the ensemble algorithm assigning weight with the same reference. To do so, when you build model, your baselearner should have the same random seed and fold number, or you can manually set the folds and use them for baselearner model building. For more details please check the documentation for [fold assignment](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/data-science/algo-params/fold_assignment.html) in h2o package. 
+
+
+#### The algorithm works as following:
+#### **Step 1: Train baselearners**
+We have trained our three baselearners, RIDGE, Random Forest, and XGBoost above. Remember they are all trained with 10-folds cross-validation and random seed 444.     
+
+**Note**:          
+For your future ensemble, you have to turn on the option `keep_cross_validation_predictions = TRUE` for each of your baselearners. 
+
+
+#### **Step 2: Create the Level-1 data**
+The level-1 dataframe contains the cross-validation results for each of your baselearners in the first few columns, and the last column for your observation Y. We build the level-1 dataframe here:
+
+```{r}
+level_1_df = tibble(
+       ridge=as.vector(h2o.getFrame(ridge_model@model[["cross_validation_holdout_predictions_frame_id"]][["name"]])),   # Ridge CV prediction
+       rf=as.vector(h2o.getFrame(default_rf@model[["cross_validation_holdout_predictions_frame_id"]][["name"]])),    # RF CV prediction
+       xgb=as.vector(h2o.getFrame(xgb_model@model[["cross_validation_holdout_predictions_frame_id"]][["name"]])),     # XGBoost CV prediction
+       Y_Soil_Moisture=as.vector(train_data[train_data['doy']==doy,]$Y_Soil_Moisture))                                         # Y observations
+
+level_1_df %>% head()
+```
+
+#### **Step 3: Train meta-learner using Level-1 data**
+We now can use the level-1 data (baselearners' CV prediction) to build a meta-learner to ensemble the baselearners. For meta-learners, you can choose several algorithms, such as GLM, random forest, gradient boost, XGBoost, deep-learning, and so on. Here, we use the **GLM with alpha=0.5** as our meta-learner. You are free to use other algorithms for your research.
+
+To compare with the default ensemble result from `h2o.stackedEnsemble` function, we need to turn off the standarize of input data and turn on non-negative option, and use the GLM model with alpha = 0.5. As we are assigning weight for each baselearner based on their cross validation accuracy vs. observation, we no longer need to perform cross-validation here. Clearly, the model with best prediction would have the highest weight (predictor coefficient in meta-learner).    
+
+We now build the GLM meta-learner using the level-1 data: 
+```{r}
+level_1_glm = h2o.glm(x=1:3, y='Y_Soil_Moisture', training_frame=as.h2o(level_1_df), standardize = FALSE, non_negative = TRUE, seed=996)
+```
+
+The meta-learner coefficients at level-1 data are:
+```{r}
+meta_coef = level_1_glm@model$coefficients
+meta_coef
+```
+
+The built ensemble model has the following parameters
+```{r}
+stack_model@model$metalearner_model
+```
+
+Comparing with the model coefficients from `h2o.stackedEnsemble` result, our parameters or weights for each baselearner are exactly the same. We can view these parameters as weights assgined for each model, with a correction term (intercept) to improve the prediction accuracy. Then we use these parameters/weights to ensemble the individual predictions from baselearners with these coefficients.  
+
+```{r}
+hand_stacked_pred = h2o.predict(ridge_model, train_data[train_data['doy']==doy,]) * meta_coef[2] + 
+                    h2o.predict(default_rf, train_data[train_data['doy']==doy,]) * meta_coef[3] +
+                    h2o.predict(xgb_model, train_data[train_data['doy']==doy,]) * meta_coef[4] + meta_coef[1]
+```
+
+We get the ensemble prediction now, let's compare if it matches the result from `h2o.stackedEnsemble` function. We follow the introduced default method to build the metalearner as this function.  
+
+Let's calculate the RMSE from our hand-made prediction. 
+```{r}
+rmse_cal = function(x1,x2){
+    rmse = sqrt(mean((x1-x2)^2))
+    return(rmse)
+}
+
+rmse_cal(hand_stacked_pred, train_data[train_data['doy']==doy,]$Y_Soil_Moisture)
+```
+
+Let's compare the RMSE with the prediction from the h2o function. 
+```{r}
+h2o.performance(stack_model,train_data[train_data['doy']==doy,])
+```
+
+#### **Summary**:
+
+Our hand-made prediction using the meta-learner is exactly the same as the one from using h2o functions, both RMSE are $0.00751$. Comparing with the best individual model, we are able to further improve on $RMSE$ and $R^2$ with the ensemble approach, with RMSE from $0.0085$ (random forest) to $0.0075$ and $R^2$ from $0.972$ to $0.975$ using the training data.  
+
+Clearly, the ensemble model built with individual different models help us to improve on the prediction power. In terms of predicting soil mositure, we can also note the errors are reduced significantly with the ensemble model comparing to RIDGE model.  
+
+
+
+## 5. Soil Moisture Downscaling
+
+We have tested the model prediction on 250th day of 2018 in Virginia, Maryland, West Virginia, and Delaware, and the ensemble approach gives us quite promising result at 10-km resolution. We now want to predict soil moisture on all available days from our finer-resolution data at 1-km and validate the prediction with observations from in-situ sites in these days.
+
+We firstly write a function to ensemble all models together, and return the prediction for your prediction dataset using the ensemble model. 
+```{r}
+ensemble_prediction = function(x, y, training_frame, predict_frame, seed=996, nfolds=10) {
+    # Build ridge model
+    paste('Start to build ensemble model...', sep='')
+    n_predictors = length(x)
+    ridge = h2o.glm(y = y, x = x, 
+                      training_frame = training_frame, 
+                      family = "gaussian",  
+                      nfolds = nfolds,
+                      seed = seed,
+                      alpha=1, 
+                      lambda_search = TRUE, 
+                      max_active_predictors = n_predictors, 
+                      keep_cross_validation_predictions = TRUE)
+    print(paste('    Finishing building RIDGE model', sep=''))
+    
+    # Build random forest model
+    rf = h2o.randomForest(y = y, x = x,
+                          training_frame = training_frame,
+                          stopping_rounds = 5, 
+                          stopping_tolerance = 0.001,
+                          stopping_metric = "MSE", 
+                          balance_classes = FALSE,
+                          seed = seed,
+                          nfolds = nfolds,
+                          keep_cross_validation_predictions = TRUE)
+    print(paste('    Finishing building Random Forest model', sep=''))
+    
+    # Build XGBoost model
+    xgb = h2o.xgboost(x = x,
+                           y = y,
+                           training_frame = training_frame,
+                           booster = "dart",
+                           normalize_type = "tree",
+                           seed = seed,
+                           nfolds = nfolds,
+                           keep_cross_validation_predictions = TRUE)
+    print(paste('    Finishing building XGBoost model', sep=''))
+    
+    # Ensemble
+    ensemble = h2o.stackedEnsemble(y = y, x = x, 
+                    training_frame = training_frame, 
+                    base_models = list(ridge, rf, xgb), seed=seed, metalearner_nfolds=nfolds)
+    
+    print(paste('    Ensemble model built','start to predict...', sep=','))
+    
+    # Make prediction
+    pred = h2o.predict(ensemble, predict_frame)
+    return(pred)
+}
+```
+
+Now we use ensemble model with the function we wrote to predict for soil moisture at each day from our dataset. 
+
+We firstly load the fine resolution 1-km data.
+```{r}
+# Load the raw data
+raw_data_P = read_csv('Predict.csv')
+
+# raw_data_P = raw_data_P %>% select(-s_landcover, -MOD_LST, -MYD_LST)   # Drop categorical and problematic variables
+raw_data_P = raw_data_P %>% select(-s_landcover)
+# Average the observations of several variables
+raw_data_P['EVI'] = rowMeans(raw_data_P %>% select(MOD_EVI,MYD_EVI),na.rm = TRUE)
+raw_data_P['NDVI'] = rowMeans(raw_data_P %>% select(MOD_NDVI,MYD_NDVI),na.rm = TRUE)
+raw_data_P['ET'] = rowMeans(raw_data_P %>% select(MOD_ET,MYD_ET),na.rm = TRUE)
+raw_data_P['LE'] = rowMeans(raw_data_P %>% select(MOD_LE,MYD_LE),na.rm = TRUE)
+raw_data_P['LST'] = rowMeans(raw_data_P %>% select(MOD_LST,MYD_LST),na.rm = TRUE)
+
+raw_data_P = raw_data_P %>% select(doy, latitude, longitude, Albedo_BSA_nir, Albedo_WSA_nir, # LST,
+                EVI, NDVI, ET, LE, s_elevation, s_aspect, s_slope)
+```
+
+Then we build model and predict using ensemble for each day in our study period. 
+
+##### **Note:**
+This process takes quite a long time. You can modify the range of for loop to only get prediction for a few days instead the full period. We also provide the prediction data for you to use directly.
+```{r eval=FALSE, include=FALSE}
+result = tibble(idx=1:278257) 
+raw_data = raw_data %>% select(doy, latitude, longitude, Albedo_BSA_nir, Albedo_WSA_nir, # LST,
+                EVI, NDVI, ET, LE, s_elevation, s_aspect, s_slope, Y_Soil_Moisture) %>% drop_na()
+for (day in 198:264) {
+  print(paste('Start to working on DOY',day, sep=' '))
+  day_all_data = raw_data_P %>% filter(doy==day)
+  valid_pred = rep(NA, nrow(day_all_data))
+  valid_rows = complete.cases(day_all_data)
+  input_data = as.h2o(raw_data %>% filter(doy==day) %>% drop_na())
+  pred_data = as.h2o(day_all_data %>% drop_na())
+  pred = ensemble_prediction(1:16, 'Y_Soil_Moisture', input_data, pred_data)
+  
+  valid_pred[valid_rows] = as.vector(pred)
+  
+  day_colname=paste('DOY',day,sep='')
+  result[day_colname]=valid_pred
+}
+
+# write.csv(result, 'Prediction_1km.csv')    # comment out if you want to save the result tibble
+```
+
+As the loop takes quite long time to finish, let us randomly select a day from our study period and check how the 1-km prediction matches with 10-km ensemble prediction and satellite observations.
+
+```{r}
+set.seed(3)
+rand_day = sample(198:264,1)
+print(rand_day)
+
+day_all_data = raw_data_P %>% filter(doy==rand_day)
+valid_pred = rep(NA, nrow(day_all_data))
+valid_rows = complete.cases(day_all_data)
+input_data = as.h2o(raw_data %>% filter(doy==rand_day) %>% drop_na())
+pred_data = as.h2o(day_all_data %>% drop_na())
+pred = ensemble_prediction(1:16, 'Y_Soil_Moisture', input_data, pred_data)
+  
+valid_pred[valid_rows] = as.vector(pred)
+```
+
+Let's plot the result at our random day 202:
+```{r}
+# Observation
+
+options(repr.plot.width = 12, repr.plot.height = 7)
+tibble('lon' = as.vector(input_data$longitude), 
+       'lat' = as.vector(input_data$latitude), 
+       'pred'= as.vector(input_data$Y_Soil_Moisture)
+      ) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + 
+geom_raster() + 
+scale_fill_viridis_c(limits=c(0,0.5)) + 
+coord_quickmap() + ggtitle('Observation')
+```
+
+```{r}
+# Ensemble Prediction
+options(warn=-1)
+
+pred_10km = ensemble_prediction(1:16, 'Y_Soil_Moisture', input_data, input_data)
+
+options(repr.plot.width = 12, repr.plot.height = 7)
+tibble('lon' = as.vector(input_data$longitude), 
+       'lat' = as.vector(input_data$latitude), 
+       'pred'= as.vector(pred_10km)
+      ) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + 
+geom_raster() + 
+scale_fill_viridis_c(limits=c(0,0.5)) + 
+coord_quickmap() + ggtitle('Ensemble prediction at 10km')
+```
+
+```{r}
+# Ensemble Prediction difference
+options(repr.plot.width = 12, repr.plot.height = 7)
+tibble('lon' = as.vector(input_data$longitude), 
+       'lat' = as.vector(input_data$latitude), 
+       'pred'= as.vector(pred_10km - input_data$Y_Soil_Moisture)
+      ) %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + 
+geom_raster() + 
+scale_fill_viridis_c(limits=c(-0.1,0.1)) + 
+coord_quickmap() + ggtitle('Difference between ensemble prediction and observation at 10km')
+```
+
+```{r}
+# Ensemble Prediction at 1km
+options(repr.plot.width = 12, repr.plot.height = 7)
+
+# pred_1km = ensemble_prediction(1:16, 'Y_Soil_Moisture', input_data, pred_data)
+
+pred_1km_day = tibble('pred'=valid_pred)
+pred_1km_day['lat']=raw_data_P %>% filter(doy==rand_day) %>% select(latitude)
+pred_1km_day['lon']=raw_data_P %>% filter(doy==rand_day) %>% select(longitude)
+# pred_1km_day = pred_1km %>% select(lat, lon, DOY262) %>% drop_na() ## remember to change DOY here
+
+
+pred_1km_day %>% 
+ggplot(aes(x=lon, y=lat, fill=pred)) + 
+geom_raster() + 
+scale_fill_viridis_c()  + ggtitle('Ensemble prediction at 1km') + 
+coord_quickmap()
+```
+
+Comparing the 1-km prediction using the ensemble model built from 10-km satellite observations, we can disaggregate the coarse satellite observations to finer resolution data. As soil moisture is an important variable for global ecosystem and climate modeling, we can use this method to provide detailed soil moisture for these climate models to help us better understand the interactions within earth system in much finer scale. 
+
+
+
+
+## 6. Appendix
+#### Grid Search
+The idea of grid search is simple. We construct a matrix to store several combinations of tuning parameters for our machine learning model. Then we will use each combination of tuning parameters to build model, and rank model based on a criterion, such as log-loss or MSE.
+
+Here we briefly introduce how to use `h2o` to easily do grid search and find the best tuning parameters for random forest.
+
+We firstly construct a list that combine several tuning parameters: ntrees, mtries, and sample_rate.
+```{r}
+hyper_grid.h2o = list(ntrees= c(100,250, 500),
+                      mtries = seq(3, 5, by = 1),
+                      #max_depth = seq(10, 30, by = 10),
+                      #min_rows = seq(1, 3, by = 1),
+                      # nbins = seq(20, 30, by = 10),
+                      sample_rate = c(0.55, 0.632, 0.75))
+
+sapply(hyper_grid.h2o, length) %>% prod()
+```
+
+Now we have 27 combinations of tuning parameters and can set up the grid search using function `h2o.grid`, set the algorithm as random forest, and stopping metric as MSE for our data. You need to pass the grid to `hyper_params`. 
+
+For more details, please check [h2o grid search](http://docs.h2o.ai/h2o/latest-stable/h2o-docs/grid-search.html) documentation.
+
+```{r}
+grid_cartesian <- h2o.grid(algorithm = "randomForest",
+                           grid_id = "rf_grid",
+                           y = 'Y_Soil_Moisture', x = 1:16,
+                           training_frame = train_data[train_data['doy']==202,],
+                           seed = 996,
+                           nfolds = 10,
+                           stopping_metric = "MSE", 
+                           hyper_params = hyper_grid.h2o,
+                           search_criteria = list(strategy = "Cartesian"))
+```
+
+The result will automatically sort the model based on MSE, therefore, the best model can be retrived by:
+```{r}
+best_rf = h2o.getModel(grid_cartesian@model_ids[[1]])
+```
+
+We can check the model variable importance by:
+```{r}
+best_rf@model$variable_importances
+```
+
+Model Cross-Validation performance:
+```{r}
+best_rf@model$cross_validation_metrics
+```
+
+Finally, you can ensemble all your models to make an ensemble prediction from all your random forest models.
+```{r}
+ensemble_rf = h2o.stackedEnsemble(y = 'Y_Soil_Moisture', x = 1:16,
+                                  training_frame = train_data[train_data['doy']==202,],
+                                  base_models = grid_cartesian@model_ids)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
