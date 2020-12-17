@@ -1,14 +1,13 @@
 ,model,price,available,time_period,area,floor,amenity,image
-0,1 Bed / 1 Bath,"2,106",12/16/2020,12 mo,726,6,"['Bay Window', 'Hardwood Floors', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72087-1-1-726.eps
+0,1 Bed / 1 Bath,"2,106",12/17/2020,12 mo,726,6,"['Bay Window', 'Hardwood Floors', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72087-1-1-726.eps
 1,1 Bed / 1 Bath,"2,129",1/9/2021,12 mo,726,3,"['Bay Window', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72087-1-1-726.eps
 2,1 Bed / 1 Bath,"2,149",1/13/2021,12 mo,726,4,"['Bay Window', 'Marble Tile', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72087-1-1-726.eps
-3,1 Bed / 1 Bath,"2,203",12/16/2020,12 mo,726,6,"['Bay Window', 'Hardwood Floors', 'Marble Tile', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-383245-1-1-726.eps
+3,1 Bed / 1 Bath,"2,203",12/17/2020,12 mo,726,6,"['Bay Window', 'Hardwood Floors', 'Marble Tile', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-383245-1-1-726.eps
 4,1 Bed / 1 Bath,"2,208",12/24/2020,12 mo,726,5,"['Bay Window', 'Hardwood Floors', 'Modern Kitchen Features', 'View of Manhattan']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72087-1-1-726.eps
 5,1 Bed / 1 Bath,"2,398",1/29/2021,12 mo,726,6,"['Bay Window', 'Hardwood Floors', 'Modern Kitchen Features', 'View of Manhattan']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-383245-1-1-726.eps
 6,1 Bed / 1 Bath,"2,481",1/5/2021,12 mo,824,6,"['Hardwood Floors', 'Marina and Statue of Liberty View', 'Modern Kitchen Features', 'Private Terrace']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72088-1-1-824.eps
 7,1 Bed / 1 Bath,"2,496",2/4/2021,12 mo,824,4,"['Hardwood Floors', 'Kitchen Window', 'Marina and Statue of Liberty View', 'Modern Kitchen Features', 'Private Terrace']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72088-1-1-824.eps
 8,1 Bed / 1 Bath,"2,593",2/4/2021,12 mo,931,NA,"['Kitchen Window', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72087-1-1-726.eps
-9,2 Bed / 2 Bath,"2,976",12/16/2020,12 mo,1213,NA,"['Corner Unit', 'Kitchen Window', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72091-2-2-1213.eps
-10,2 Bed / 2 Bath,"2,993",12/17/2020,12 mo,1213,NA,"['Hardwood Floors', 'Kitchen Window', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72091-2-2-1213.eps
-11,2 Bed / 2 Bath,"3,190",2/19/2021,12 mo,1109,4,"['Large Private Terrace', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72089-2-2-1109.eps
-12,2 Bed / 2 Bath,"3,243",2/4/2021,12 mo,1113,6,"['Bay Window', 'Corner Unit', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72090-2-2-1113.eps
+9,2 Bed / 2 Bath,"2,946",12/17/2020,12 mo,1213,NA,"['Corner Unit', 'Kitchen Window', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72091-2-2-1213.eps
+10,2 Bed / 2 Bath,"3,175",2/19/2021,12 mo,1109,4,"['Large Private Terrace', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72089-2-2-1109.eps
+11,2 Bed / 2 Bath,"3,228",2/4/2021,12 mo,1113,6,"['Bay Window', 'Corner Unit', 'Modern Kitchen Features']",https://media.equityapartments.com/image/upload/f_auto/2434-FP-72090-2-2-1113.eps
