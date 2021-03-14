@@ -1,42 +1,31 @@
 ,model,price,available,time_period,area,floor,amenity,image
-0,0 Bed / 1 Bath,"1,872",1/27/2021,12 mo,505,17,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
-1,0 Bed / 1 Bath,"1,888",2/13/2021,12 mo,505,20,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
-2,0 Bed / 1 Bath,"2,027",2/20/2021,12 mo,505,35,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
-3,0 Bed / 1 Bath,"2,052",12/17/2020,12 mo,505,35,"['Hardwood Floors', 'Kitchen Backsplash', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
-4,0 Bed / 1 Bath,"2,073",2/9/2021,12 mo,505,NA,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
-5,0 Bed / 1 Bath,"2,094",2/2/2021,12 mo,505,46,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
-6,0 Bed / 1 Bath,"2,146",2/26/2021,12 mo,627,30,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002919-0-1-627.eps
-7,0 Bed / 1 Bath,"2,177",1/6/2021,12 mo,627,27,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002919-0-1-627.eps
-8,0 Bed / 1 Bath,"2,229",12/17/2020,12 mo,627,38,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002919-0-1-627.eps
-9,0 Bed / 1 Bath,"2,250",1/15/2021,12 mo,627,43,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002919-0-1-627.eps
-10,1 Bed / 1 Bath,"2,112",12/17/2020,12 mo,592,19,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
-11,1 Bed / 1 Bath,"2,219",1/1/2021,12 mo,592,22,"['Eastern Exposure', 'Kitchen Backsplash', 'Northern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
-12,1 Bed / 1 Bath,"2,225",1/6/2021,12 mo,592,26,"['Eastern Exposure', 'Northern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
-13,1 Bed / 1 Bath,"2,230",12/17/2020,12 mo,755,8,"['Exterior Brick Facade', 'Southern Exposure', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002942-1-1-755.eps
-14,1 Bed / 1 Bath,"2,250",2/12/2021,12 mo,755,7,"['Exterior Brick Facade', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002942-1-1-755.eps
-15,1 Bed / 1 Bath,"2,301",2/27/2021,12 mo,756,17,['Southern Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-381612-1-1-756.eps
-16,1 Bed / 1 Bath,"2,323",12/17/2020,12 mo,858,6,"['Exterior Brick Facade', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002924-1-1-858.eps
-17,1 Bed / 1 Bath,"2,430",12/23/2020,12 mo,736,38,"['Eastern Exposure', 'Hardwood Floors', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002940-1-1-736.eps
-18,1 Bed / 1 Bath,"2,492",1/30/2021,12 mo,839,15,"['Kitchen Backsplash', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002923-1-1-839.eps
-19,1 Bed / 1 Bath,"2,513",12/17/2020,12 mo,756,23,['Northern Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
-20,1 Bed / 1 Bath,"2,534",2/17/2021,12 mo,665,38,"['Eastern Exposure', 'Hardwood Floors', 'Southern Exposure', ""View of New York City's Skyline""]",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002957-1-1-665.eps
-21,1 Bed / 1 Bath,"2,538",2/5/2021,12 mo,756,24,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-381612-1-1-756.eps
-22,1 Bed / 1 Bath,"2,544",1/9/2021,12 mo,839,27,"['Kitchen Backsplash', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002923-1-1-839.eps
-23,1 Bed / 1 Bath,"2,559",12/17/2020,12 mo,736,35,"['Hardwood Floors', 'Kitchen Backsplash', 'Southern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002940-1-1-736.eps
-24,1 Bed / 1 Bath,"2,570",2/12/2021,12 mo,803,27,"['Northern Exposure', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002916-1-1-803.eps
-25,1 Bed / 1 Bath,"2,601",1/8/2021,12 mo,694,44,"['Hardwood Floors', 'Kitchen Backsplash', ""View of New York City's Skyline"", 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002957-1-1-665.eps
-26,1 Bed / 1 Bath,"2,622",1/16/2021,12 mo,839,19,"['Kitchen Backsplash', 'View of Lower Manhattan']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002923-1-1-839.eps
-27,1 Bed / 1 Bath,"2,646",1/15/2021,12 mo,839,18,"['Balcony', 'Northern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002923-1-1-839.eps
-28,1 Bed / 1 Bath,"2,673",1/29/2021,12 mo,712,44,"['Hardwood Floors', 'Kitchen Backsplash', ""View of New York City's Skyline"", 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002939-1-1-712.eps
-29,1 Bed / 1 Bath,"2,835",12/17/2020,12 mo,741,47,"['Balcony', 'Hardwood Floors']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002941-1-1-741.eps
-30,1 Bed / 1 Bath,"2,899",1/8/2021,12 mo,1039,3,"['2 Floors of Living Space', 'Exterior Brick Facade', 'Hardwood Floors', 'Kitchen Backsplash', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002928-1-1-1039.eps
-31,1 Bed / 1 Bath,"2,905",1/12/2021,12 mo,764,48,"['Hardwood Floors', 'Southern Exposure', 'View of Mountains and Jersey City', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002925-1-1-764.eps
-32,1 Bed / 1 Bath,"2,925",12/17/2020,12 mo,1083,8,"['Exterior Brick Facade', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002950-1-1-1083.eps
-33,1 Bed / 1 Bath,"2,930",12/21/2020,12 mo,1083,9,"['Exterior Brick Facade', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002950-1-1-1083.eps
-34,1 Bed / 1 Bath,"3,110",12/17/2020,12 mo,1267,4,"['Exterior Brick Facade', 'Kitchen Backsplash', 'View of Lower Manhattan']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002953-1-1-1257.eps
-35,2 Bed / 2 Bath,"3,538",1/7/2021,12 mo,1014,29,"['Eastern Exposure', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002948-2-2-1014.eps
-36,2 Bed / 2 Bath,"3,601",12/17/2020,12 mo,1014,30,"['Eastern Exposure', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002930-2-2-1014.eps
-37,2 Bed / 2 Bath,"3,816",2/6/2021,12 mo,1014,NA,"['Hardwood Floors', 'View of Mountains and Jersey City', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002948-2-2-1014.eps
-38,2 Bed / 2 Bath,"4,075",12/17/2020,12 mo,1005,47,"['Eastern Exposure', 'Hardwood Floors', 'Kitchen Backsplash', ""View of New York City's Skyline""]",https://media.equityapartments.com/image/upload/f_auto/3726-FP-381613-2-2-1005.eps
-39,2 Bed / 2 Bath,"4,281",12/17/2020,12 mo,1133,47,"['Hardwood Floors', 'Kitchen Backsplash', 'View of Mountains and Jersey City', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002951-2-2-1133.eps
-40,3 Bed / 2 Bath,"4,262",12/17/2020,12 mo,1313,17,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002918-3-2-1313.eps
+0,0 Bed / 1 Bath,"1,965",3/7/2021,12 mo,505,29,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
+1,0 Bed / 1 Bath,"2,083",3/6/2021,12 mo,505,NA,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002915-0-1-505.eps
+2,0 Bed / 1 Bath,"2,156",3/10/2021,12 mo,627,30,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002919-0-1-627.eps
+3,0 Bed / 1 Bath,"2,259",3/6/2021,12 mo,627,40,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002919-0-1-627.eps
+4,0 Bed / 1 Bath,"2,279",3/4/2021,12 mo,627,39,"['Hardwood Floors', 'Kitchen Backsplash', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002919-0-1-627.eps
+5,1 Bed / 1 Bath,"2,373",3/19/2021,12 mo,592,17,"['Eastern Exposure', 'Northern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
+6,1 Bed / 1 Bath,"2,425",3/6/2021,12 mo,755,7,"['Exterior Brick Facade', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002942-1-1-755.eps
+7,1 Bed / 1 Bath,"2,425",4/9/2021,12 mo,592,21,['View of Lower Manhattan'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
+8,1 Bed / 1 Bath,"2,430",3/6/2021,12 mo,592,26,"['Eastern Exposure', 'Northern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
+9,1 Bed / 1 Bath,"2,518",5/1/2021,12 mo,665,29,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002957-1-1-665.eps
+10,1 Bed / 1 Bath,"2,537",3/6/2021,12 mo,858,3,"['Exterior Brick Facade', 'Kitchen Backsplash', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002924-1-1-858.eps
+11,1 Bed / 1 Bath,"2,630",3/6/2021,12 mo,736,38,"['Eastern Exposure', 'Hardwood Floors', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002940-1-1-736.eps
+12,1 Bed / 1 Bath,"2,673",3/10/2021,12 mo,803,15,"['Northern Exposure', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002916-1-1-803.eps
+13,1 Bed / 1 Bath,"2,678",4/10/2021,12 mo,803,16,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002916-1-1-803.eps
+14,1 Bed / 1 Bath,"2,713",3/4/2021,12 mo,756,23,['Northern Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
+15,1 Bed / 1 Bath,"2,769",3/6/2021,12 mo,756,27,"['Kitchen Backsplash', 'Northern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002920-1-1-592.eps
+16,1 Bed / 1 Bath,"2,770",3/4/2021,12 mo,736,37,"['Eastern Exposure', 'Hardwood Floors', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002940-1-1-736.eps
+17,1 Bed / 1 Bath,"2,770",5/25/2021,12 mo,736,39,['Hardwood Floors'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002940-1-1-736.eps
+18,1 Bed / 1 Bath,"2,886",4/29/2021,12 mo,839,24,"['Balcony', 'Southern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002923-1-1-839.eps
+19,1 Bed / 1 Bath,"3,017",5/28/2021,12 mo,1029,9,"['2 Floors of Living Space', 'Exterior Brick Facade']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002928-1-1-1039.eps
+20,1 Bed / 1 Bath,"3,070",3/6/2021,12 mo,803,22,"['View of Lower Manhattan', 'View of Lower Manhattan']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002916-1-1-803.eps
+21,1 Bed / 1 Bath,"3,095",3/19/2021,12 mo,1083,7,"['Exterior Brick Facade', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002950-1-1-1083.eps
+22,1 Bed / 1 Bath,"3,110",3/4/2021,12 mo,764,48,"['Hardwood Floors', 'Southern Exposure', 'View of Mountains and Jersey City', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002925-1-1-764.eps
+23,1 Bed / 1 Bath,"3,115",3/10/2021,12 mo,1083,6,"['Exterior Brick Facade', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002950-1-1-1083.eps
+24,2 Bed / 2 Bath,"3,506",3/4/2021,12 mo,1014,30,"['Eastern Exposure', 'Kitchen Backsplash']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002930-2-2-1014.eps
+25,2 Bed / 2 Bath,"3,796",3/4/2021,12 mo,1014,NA,"['Hardwood Floors', 'View of Mountains and Jersey City', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002948-2-2-1014.eps
+26,2 Bed / 2 Bath,"3,986",4/30/2021,12 mo,1014,32,"['Hardwood Floors', 'Western Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002930-2-2-1014.eps
+27,3 Bed / 2 Bath,"4,789",3/6/2021,12 mo,1290,35,"['Eastern Exposure', 'Hardwood Floors', 'Southern Exposure']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002934-3-2-1290.eps
+28,3 Bed / 2 Bath,"4,790",3/4/2021,12 mo,1408,12,['Western Exposure'],https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002932-3-2-1408.eps
+29,3 Bed / 2 Bath,"4,800",3/25/2021,12 mo,1290,37,"['Eastern Exposure', 'Hardwood Floors']",https://media.equityapartments.com/image/upload/f_auto/3726-FP-00002934-3-2-1290.eps

@@ -1,24 +1,20 @@
 ,model,price,available,time_period,area,floor,amenity,image
-0,1 Bed / 1 Bath,"2,520",12/21/2020,12 mo,769,4,['Renovated'],https://media.equityapartments.com/image/upload/f_auto/2539-FP-72789-1-1-769.eps
-1,1 Bed / 1 Bath,"2,530",12/27/2020,12 mo,769,5,['Renovated'],https://media.equityapartments.com/image/upload/f_auto/2539-FP-72789-1-1-769.eps
-2,1 Bed / 1 Bath,"2,541",1/1/2021,12 mo,769,6,['Renovated'],https://media.equityapartments.com/image/upload/f_auto/2539-FP-72789-1-1-769.eps
-3,1 Bed / 1 Bath,"2,582",1/29/2021,12 mo,703,5,"['Balcony', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72775-1-1-703.eps
-4,1 Bed / 1 Bath,"2,582",2/11/2021,12 mo,741,7,"['Juliet Balcony', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72784-1-1-741.eps
-5,1 Bed / 1 Bath,"2,593",12/17/2020,12 mo,712,6,"['Balcony', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73830-1-1-712.eps
-6,1 Bed / 1 Bath,"2,598",12/17/2020,12 mo,703,4,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72775-1-1-703.eps
-7,1 Bed / 1 Bath,"2,608",2/20/2021,12 mo,741,7,"['Juliet Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72784-1-1-741.eps
-8,1 Bed / 1 Bath,"2,624",1/6/2021,12 mo,741,4,"['Balcony', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72784-1-1-741.eps
-9,1 Bed / 1 Bath,"2,804",1/11/2021,12 mo,830,4,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72794-1-1-830.eps
-10,1 Bed / 1 Bath,"2,959",1/11/2021,12 mo,889,4,"['Balcony', 'Extra Den Space with Door', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72797-1-1-889.eps
-11,1 Bed / 1 Bath,"2,969",12/17/2020,12 mo,889,5,"['Balcony', 'Extra Den Space with Door', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72797-1-1-889.eps
-12,1 Bed / 1 Bath,"2,979",1/23/2021,12 mo,984,NA,"['Extra Den Space with Door', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-00379368-1-1-984.eps
-13,1 Bed / 1 Bath,"2,995",12/19/2020,12 mo,889,5,"['Balcony', 'Extra Den Space with Door', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72797-1-1-889.eps
-14,1 Bed / 1 Bath,"3,006",12/22/2020,12 mo,889,6,"['Balcony', 'Extra Den Space with Door', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72797-1-1-889.eps
-15,1 Bed / 1 Bath,"3,041",12/17/2020,12 mo,1032,3,"['Extra Den Space with Door', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72804-1-1-1032.eps
-16,1 Bed / 1 Bath,"3,067",12/21/2020,12 mo,740,7,"['Balcony', 'Private Terrace', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72787-1-1-740.eps
-17,1 Bed / 1 Bath,"3,082",1/28/2021,12 mo,1032,4,"['Extra Den Space with Door', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72804-1-1-1032.eps
-18,1 Bed / 1 Bath,"3,302",12/17/2020,12 mo,816,7,"['Patio', 'Private Terrace', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73832-1-1-816.eps
-19,2 Bed / 2 Bath,"3,643",2/19/2021,12 mo,1031,5,"['Balcony', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73834-2-2-1031.eps
-20,2 Bed / 2 Bath,"3,910",12/19/2020,12 mo,1252,3,"['Granite Kitchen Island', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73203-2-2-1252.eps
-21,2 Bed / 2 Bath,"3,987",2/27/2021,12 mo,1252,6,"['Granite Kitchen Island', 'Renovated', 'View of NYC Skyline and Midtown']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73203-2-2-1252.eps
-22,2 Bed / 2 Bath,"4,241",1/21/2021,12 mo,1253,7,"['Private Terrace', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73204-2-2-1253.eps
+0,1 Bed / 1 Bath,"2,485",5/1/2021,12 mo,961,1,['Renovated'],https://media.equityapartments.com/image/upload/f_auto/2539-FP-73829-1-1-961.eps
+1,1 Bed / 1 Bath,"2,513",3/4/2021,12 mo,712,6,"['Balcony', 'Partial View of Hudson River', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73830-1-1-712.eps
+2,1 Bed / 1 Bath,"2,552",3/4/2021,12 mo,741,7,"['Juliet Balcony', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-383456-1-1-741.eps
+3,1 Bed / 1 Bath,"2,557",3/4/2021,12 mo,703,5,"['Balcony', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72775-1-1-703.eps
+4,1 Bed / 1 Bath,"2,573",3/24/2021,12 mo,703,4,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72775-1-1-703.eps
+5,1 Bed / 1 Bath,"2,583",5/19/2021,12 mo,741,7,"['Juliet Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-383456-1-1-741.eps
+6,1 Bed / 1 Bath,"2,625",3/4/2021,12 mo,741,4,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72784-1-1-741.eps
+7,1 Bed / 1 Bath,"2,651",5/11/2021,12 mo,741,6,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72784-1-1-741.eps
+8,1 Bed / 1 Bath,"2,651",5/13/2021,12 mo,741,6,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72784-1-1-741.eps
+9,1 Bed / 1 Bath,"2,763",3/30/2021,12 mo,741,NA,"['Patio', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72784-1-1-741.eps
+10,1 Bed / 1 Bath,"2,934",3/4/2021,12 mo,889,4,"['Balcony', 'Extra Den Space with Door', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72797-1-1-889.eps
+11,1 Bed / 1 Bath,"2,938",4/28/2021,12 mo,984,5,"['Extra Den Space with Door', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-00379368-1-1-984.eps
+12,2 Bed / 2 Bath,"3,498",3/22/2021,12 mo,1211,5,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73202-2-2-1211.eps
+13,2 Bed / 2 Bath,"3,588",6/17/2021,12 mo,1211,5,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73202-2-2-1211.eps
+14,2 Bed / 2 Bath,"3,594",3/27/2021,12 mo,1211,5,"['Balcony', 'Renovated', 'View of NYC Skyline and Midtown']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73202-2-2-1211.eps
+15,2 Bed / 2 Bath,"3,734",4/9/2021,12 mo,1280,1,"['Balcony', 'Renovated']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73205-2-2-1280.eps
+16,2 Bed / 2 Bath,"3,939",4/2/2021,12 mo,1300,5,"['Patio', 'Renovated', 'View of Hudson River']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72824-2-2-1332.eps
+17,2 Bed / 2 Bath,"3,970",4/29/2021,12 mo,1252,3,"['Granite Kitchen Island', 'Patio', 'Renovated', 'View of NYC Skyline and Midtown']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-73203-2-2-1252.eps
+18,2 Bed / 2 Bath,"4,882",4/8/2021,12 mo,1320,4,"['Balcony', 'End Unit', 'Private Terrace', 'Renovated', 'View of NYC Skyline and Midtown']",https://media.equityapartments.com/image/upload/f_auto/2539-FP-72822-2-2-1320.eps

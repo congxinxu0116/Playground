@@ -22,8 +22,8 @@
 20,Residence 03,2,2,1240,Contact Us,+Terrace,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_MLineFloor4.svg
 21,Residence 06,2,2,1240,Contact Us,1240 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_MLineFloors2-3.svg
 22,Residence 03,2,2,1240,Contact Us,1240 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_MLineFloors5-11.svg
-23,Residence 02,1,1,660,"$2,435",660 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_NLineFloors4-11.svg
-24,Residence 01,2,2,1548,"$3,860",+Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_OLineFloors2-3.svg
+23,Residence 02,1,1,660,Contact Us,660 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_NLineFloors4-11.svg
+24,Residence 01,2,2,1548,"$5,166",+Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_OLineFloors2-3.svg
 25,P Line Floors 2-3,2,2,Sq.,Contact Us,+Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_PLineFloors2-3.svg
 26,Q Line Floor 2,1,1,Sq.,Contact Us,+Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_QLineFloor2.svg
 27,Q Line Floor 3,1,1,Sq.,Contact Us,+Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_QLineFloor3.svg
@@ -34,31 +34,32 @@
 32,Residence 10,1,1,859,Contact Us,859 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_XLineFloor2.svg
 33,Y Line Floor 2,3,2,Sq.,Contact Us,Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_YLineFloor2.svg
 34,Residence 12 Floor 3 Floor 3,3,2,1324,Contact Us,+Terrace,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_GLineFloor3.svg
-35,Residence 01,3,2,1319,"$4,080",1319 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_ALineFloors5-11.svg
-36,Residence 01,2,2,1548,"$3,860",+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/1-1.svg
-37,Residence 02,2,2,1522,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/02-1.svg
-38,Residence 03,1,1,1194,"$4,384",+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/03-1.svg
-39,Residence 04,1,1,1211,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/04.svg
-40,Residence 04,2,2,1211,Contact Us,1211 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_LLineFloors5-11.svg
-41,Residence 05,1,1,709,Contact Us,709 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_NLineFloors2-3.svg
-42,Residence 05,2,2,1075,Contact Us,1075 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/5-1.svg
-43,Residence 06,2,2,1004,Contact Us,1004 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/6-1.svg
-44,Residence 06,2,2,1371,Contact Us,1371 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/6-2.svg
-45,Residence 07,1,1,849,Contact Us,849 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/7-1.svg
-46,Residence 07,2,2,1096,Contact Us,1096 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/7-2.svg
-47,Residence 07,2,2,1439,Contact Us,1439 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/7-3.svg
-48,Residence 08,1,1,754,Contact Us,754 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/08-1.svg
-49,Residence 08,2,2,1079,Contact Us,1079 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/08-2.svg
-50,Residence 08,2,2,1468,Contact Us,1468 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/08-3.svg
-51,Residence 09,1,1,754,Contact Us,754 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/9-1.svg
-52,Residence 09,3,2,1342,"$4,043",1342 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/9-2.svg
-53,Resident 09,2,2,1343,Contact Us,1343 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_JLineFloor3.svg
-54,Residence 10,1,1,859,Contact Us,859 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/10-1.svg
-55,Residence 10,1,1,902,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/10-2.svg
-56,Residence 10,2,2,1378,Contact Us,1378 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/10-3.svg
-57,Residence 11,3,2,1787,"$4,193",1787 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/11-1.svg
-58,Residence 12,1,1,917,Contact Us,+Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_DLineFloors5-11.svg
-59,Residence 12,1,1,917,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/12-11.svg
-60,Residence 13,1,1,850,Contact Us,850 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_CLineFloors5-11.svg
-61,Residence 14,1,1,798,Contact Us,798 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_BLineFloors5-11.svg
-62,Residence 14,1,1,1495,Contact Us,+ Den + Terrace,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/14-1.svg
+35,Residence 14,1,1,798,"$2,435",798 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/RESIDENCE-14_floorplan_detail_-01.svg
+36,Residence 01,3,2,1319,"$5,094",1319 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_ALineFloors5-11.svg
+37,Residence 01,2,2,1548,"$5,166",+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/1-1.svg
+38,Residence 02,2,2,1522,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/02-1.svg
+39,Residence 03,1,1,1194,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/03-1.svg
+40,Residence 04,1,1,1211,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/04.svg
+41,Residence 04,2,2,1211,Contact Us,1211 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_LLineFloors5-11.svg
+42,Residence 05,1,1,709,"$2,268",709 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_NLineFloors2-3.svg
+43,Residence 05,2,2,1075,"$3,990",1075 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/5-1.svg
+44,Residence 06,2,2,1004,Contact Us,1004 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/6-1.svg
+45,Residence 06,2,2,1371,Contact Us,1371 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/6-2.svg
+46,Residence 07,1,1,849,Contact Us,849 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/7-1.svg
+47,Residence 07,2,2,1096,Contact Us,1096 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/7-2.svg
+48,Residence 07,2,2,1439,Contact Us,1439 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/7-3.svg
+49,Residence 08,1,1,754,Contact Us,754 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/08-1.svg
+50,Residence 08,2,2,1079,Contact Us,1079 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/08-2.svg
+51,Residence 08,2,2,1468,Contact Us,1468 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/08-3.svg
+52,Residence 09,1,1,754,Contact Us,754 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/9-1.svg
+53,Residence 09,3,2,1342,Contact Us,1342 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/9-2.svg
+54,Resident 09,2,2,1343,Contact Us,1343 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_JLineFloor3.svg
+55,Residence 10,1,1,859,Contact Us,859 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/10-1.svg
+56,Residence 10,1,1,902,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/10-2.svg
+57,Residence 10,2,2,1378,Contact Us,1378 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/10-3.svg
+58,Residence 11,3,2,1787,Contact Us,1787 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/11-1.svg
+59,Residence 12,1,1,917,Contact Us,+Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_DLineFloors5-11.svg
+60,Residence 12,1,1,917,Contact Us,+ Den,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/12-11.svg
+61,Residence 13,1,1,850,"$2,525",850 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_CLineFloors5-11.svg
+62,Residence 14,1,1,798,Contact Us,798 Sq. Ft.,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/floorplan_detail_BLineFloors5-11.svg
+63,Residence 14,1,1,1495,Contact Us,+ Den + Terrace,There are currently no lease terms set for this unit.,https://vinehoboken.com/assets/images/14-1.svg
