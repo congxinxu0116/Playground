@@ -38,7 +38,7 @@ for (i in title$Job_titles) {
     
   # Step 4: Go to the job page for each job id ----
   desp_list <- list()
-  title_list <- list()
+  # title_list <- list()
   
   for (j in id_list) {
     url = paste0(job_id_url, j)
@@ -79,4 +79,4 @@ for (l in output_list) {
     output <- bind_rows(output, l)
   }
 }
-write_csv(output, paste0(path, 'Job Description List.csv'))
+write_delim(output, paste0(path, 'Job Description List.csv'), delim = "|")
