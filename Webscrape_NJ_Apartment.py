@@ -20,4 +20,8 @@ r = requests.get(url, headers = headers)
 print(r)
 # %%
 # Parse the HTML with Beautiful Soup
-books = BeautifulSoup(r.text, 'html.parser')
+apts = BeautifulSoup(r.text, 'html.parser')
+# %%
+# col col-xs-4 col-md-3 pricing ng-binding
+apts.find_all("li")
+# %%
