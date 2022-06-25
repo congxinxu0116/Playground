@@ -79,4 +79,6 @@ for (l in output_list) {
     output <- bind_rows(output, l)
   }
 }
+
+
 write_delim(output, paste0(path, 'Job Description List.csv'), delim = "|")
